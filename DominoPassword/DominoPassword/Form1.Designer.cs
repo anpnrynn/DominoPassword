@@ -78,7 +78,10 @@
             label3 = new Label();
             listBox1 = new ListBox();
             button40 = new Button();
+            statusStrip1 = new StatusStrip();
+            toolStripStatusLabel1 = new ToolStripStatusLabel();
             tableLayoutPanel1.SuspendLayout();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // imageList1
@@ -515,10 +518,10 @@
             textBox1.Location = new Point(12, 78);
             textBox1.Name = "textBox1";
             textBox1.PlaceholderText = "Enter a pin number between 10-99999";
-            textBox1.RightToLeft = RightToLeft.Yes;
+            textBox1.RightToLeft = RightToLeft.No;
             textBox1.Size = new Size(389, 31);
             textBox1.TabIndex = 1;
-            textBox1.TextAlign = HorizontalAlignment.Right;
+            textBox1.Leave += textBox1_Leave;
             // 
             // label1
             // 
@@ -605,11 +608,28 @@
             button40.UseVisualStyleBackColor = true;
             button40.Click += button40_Click;
             // 
+            // statusStrip1
+            // 
+            statusStrip1.ImageScalingSize = new Size(24, 24);
+            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
+            statusStrip1.Location = new Point(0, 720);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(417, 32);
+            statusStrip1.TabIndex = 11;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            toolStripStatusLabel1.Size = new Size(60, 25);
+            toolStripStatusLabel1.Text = "Ready";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(417, 752);
+            Controls.Add(statusStrip1);
             Controls.Add(button40);
             Controls.Add(listBox1);
             Controls.Add(label3);
@@ -621,6 +641,7 @@
             Controls.Add(label1);
             Controls.Add(textBox1);
             Controls.Add(tableLayoutPanel1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MaximumSize = new Size(439, 808);
             MinimumSize = new Size(439, 808);
@@ -629,6 +650,8 @@
             Text = "Domino Password";
             Load += Form1_Load;
             tableLayoutPanel1.ResumeLayout(false);
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -683,5 +706,7 @@
         private Label label3;
         private ListBox listBox1;
         private Button button40;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel toolStripStatusLabel1;
     }
 }

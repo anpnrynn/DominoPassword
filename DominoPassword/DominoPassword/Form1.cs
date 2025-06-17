@@ -14,7 +14,7 @@ namespace DominoPassword
 
         //Die Rahul Gandhi, you stealing french bastard!!!
 
-        private string initdata     = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz!$'*+,-./:;<=>?^_`~$'*+,-./:;<=>?^_`";
+        private string initdata = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz!$'*+,-./:;<=>?^_`~$'*+,-./:;<=>?^_`";
         private string initdata_1_1 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz!$'*+,-./:;<=>?^_`~$'*+,-./:;<=>?^_`";
         private string initdata_2_0 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`~!@#$%^&*()_+-={}|[]\\\\:\\\";'<>?,./^&*()_+-={}|[]\";";
         private string initdata_2_1 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`~!@#$%^&*()_+-={}|[]\\\\:\\\";'<>?,./^&*()_+-={}|[]\";"; // 108 characters
@@ -33,9 +33,9 @@ namespace DominoPassword
         private void copyto(ref char[] array, char[] copyfrom, int offset, int n)
         {
             int i = 0;
-            while( i < copyfrom.Length)
+            while (i < copyfrom.Length)
             {
-                array[offset+i] = copyfrom[i];
+                array[offset + i] = copyfrom[i];
                 i++;
             }
         }
@@ -44,7 +44,7 @@ namespace DominoPassword
             char[] s1 = srotate.Take(n).ToArray();
             char[] s2 = srotate.Skip(n).ToArray();
             copyto(ref srotate, s2, 0, s2.Length);
-            copyto(ref srotate, s1, s2.Length, s1.Length );
+            copyto(ref srotate, s1, s2.Length, s1.Length);
             return srotate;
         }
 
@@ -56,7 +56,7 @@ namespace DominoPassword
 
             copyto(ref srotate, s2, 0, s2.Length);
             copyto(ref srotate, s3, s2.Length, s3.Length);
-            copyto(ref srotate, s1, s2.Length+s3.Length, s1.Length);
+            copyto(ref srotate, s1, s2.Length + s3.Length, s1.Length);
             return srotate;
         }
 
@@ -75,7 +75,7 @@ namespace DominoPassword
         string gen2_1_rotate(string srotate, int count, int n)
         {
             string s1 = srotate.Substring(0, count);
-            string s2 = srotate.Substring(count, n-count);
+            string s2 = srotate.Substring(count, n - count);
             //string s3 = srotate.Substring(count+n, srotate.Length-count-n);
             //string s2 = srotate.Substring(count, srotate.Length - count);
             //memcpy(tmpdata, data, count);
@@ -105,7 +105,7 @@ namespace DominoPassword
         private char[] swapchars_array_skip(char[] s, int skip, int m, int n, int o = 0)
         {
             //StringBuilder sb = new StringBuilder(s);
-            char c = s[skip+m];
+            char c = s[skip + m];
             s[skip + m] = s[skip + n];
             s[skip + n] = c;
             return s;
@@ -116,7 +116,7 @@ namespace DominoPassword
         private int gen1_1_rotatevalue(int pin, int[] shiftkeys)
         {
             int i = 0;
-            
+
             while (shiftkeys[i] != 0)
             {
                 if (pin < shiftkeys[i])
@@ -140,7 +140,7 @@ namespace DominoPassword
         int gen2_1_rotatevalue(int pin, int[] shiftkeys)
         {
             int i = 0;
-            
+
             while (shiftkeys[i] != 0)
             {
                 if (pin < shiftkeys[i])
@@ -193,28 +193,34 @@ namespace DominoPassword
         private int[] shiftkeys = { 3500, 301390, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 
-        void gen1_1_shuffle( string s, int pin ) {
+        void gen1_1_shuffle(string s, int pin)
+        {
             Debug.WriteLine("String length is : " + s.Length);
             int n = 108;
             int k = 1;
             int j = 0;
             char[] schar = s.ToCharArray();
-            int [] random = { 23, 13, 17, 7, 11 };
-            for ( ;  j<pin; j++ ) {
+            int[] random = { 23, 13, 17, 7, 11 };
+            for (; j < pin; j++)
+            {
                 char[] s1 = schar.Take(n / 2).ToArray();
                 char[] s2 = schar.Skip(n / 2).ToArray();
 
-                for (int i = 0; i<n/4; i++ ){
-                    if(k % 2  == 0 ){
-                        s1 = swapchars_array(s1, i, n/2-i-1, n/2 );
-                        s1 = swapchars_array_skip(s1, random[3], i, n/2-i-1-random[2], n/2 );
-                        s2 = swapchars_array(s2, i, n/2-i-1, n/2 );
-                        s1 = swapchars_array_skip(s1, random[4], i, n/2-i-1-random[4], n/2 );
-                    } else {
-                        s1 = swapchars_array(s1, i, n/2-i-2, n/2 );
-                        s1 = swapchars_array_skip(s1, random[3], i, n/2-i-2-random[3], n/2 );
-                        s2 = swapchars_array(s2, i, n/2-i-2, n/2 );
-                        s1 = swapchars_array_skip(s1, random[4], i, n/2-i-2-random[4], n/2 );
+                for (int i = 0; i < n / 4; i++)
+                {
+                    if (k % 2 == 0)
+                    {
+                        s1 = swapchars_array(s1, i, n / 2 - i - 1, n / 2);
+                        s1 = swapchars_array_skip(s1, random[3], i, n / 2 - i - 1 - random[2], n / 2);
+                        s2 = swapchars_array(s2, i, n / 2 - i - 1, n / 2);
+                        s1 = swapchars_array_skip(s1, random[4], i, n / 2 - i - 1 - random[4], n / 2);
+                    }
+                    else
+                    {
+                        s1 = swapchars_array(s1, i, n / 2 - i - 2, n / 2);
+                        s1 = swapchars_array_skip(s1, random[3], i, n / 2 - i - 2 - random[3], n / 2);
+                        s2 = swapchars_array(s2, i, n / 2 - i - 2, n / 2);
+                        s1 = swapchars_array_skip(s1, random[4], i, n / 2 - i - 2 - random[4], n / 2);
                     }
 
                     s1 = swapchars_array(s1, i, random[1] + i, n / 2);
@@ -233,52 +239,59 @@ namespace DominoPassword
                 int nrotate = 0;
                 if ((nrotate = gen1_1_rotatevalue(pin, shiftkeys)) != 0)
                 {
-                    trirotate_array( ref schar, nrotate, n-nrotate);
+                    trirotate_array(ref schar, nrotate, n - nrotate);
                 }
             }
             //shuffledData = ;
-            int p = 0;
-            Debug.WriteLine("Shuffled data: ");
-            while ( p < 108) { 
-                Debug.Write(schar[p]);
-                p++;
-            }
-            Debug.WriteLine("");
+            //int p = 0;
+            //Debug.WriteLine("Shuffled data: ");
+            //while ( p < 108) { 
+            //    Debug.Write(schar[p]);
+            //    p++;
+            //}
+            //Debug.WriteLine("");
             shuffledData = new string(schar);
-            Debug.WriteLine("Exit string length is: " + shuffledData.Length);
+            //Debug.WriteLine("Exit string length is: " + shuffledData.Length);
             return;
         }
 
 
-        void gen2_shuffle( string s , int pin) {
+        void gen2_shuffle(string s, int pin)
+        {
             int n = 108;
             int k = 1;
             string stemp = s;
-            int []random = { 23, 13, 17 };
-            for (int j = 0; j<pin; j++ ) {
+            int[] random = { 23, 13, 17 };
+            for (int j = 0; j < pin; j++)
+            {
                 string s1 = stemp.Substring(0, n / 2);
                 string s2 = stemp.Substring(n / 2, n / 2);
-                for (int i = 0; i<n/4; i++ ){
-                    if(k % 2  == 0 ){
-                        s1 = swapchars(s1, i, n/2-i-1, n/2 );
-                        s2 = swapchars(s2, i, n/2-i-1, n/2 );
-                    } else { 
-                        s1 = swapchars(s1, i, n/2-i-2, n/2 );
-                        s2 = swapchars(s2, i, n/2-i-2, n/2 );
+                for (int i = 0; i < n / 4; i++)
+                {
+                    if (k % 2 == 0)
+                    {
+                        s1 = swapchars(s1, i, n / 2 - i - 1, n / 2);
+                        s2 = swapchars(s2, i, n / 2 - i - 1, n / 2);
+                    }
+                    else
+                    {
+                        s1 = swapchars(s1, i, n / 2 - i - 2, n / 2);
+                        s2 = swapchars(s2, i, n / 2 - i - 2, n / 2);
                     }
                     k++;
-                }  
-                s1 = gen2_1_rotate(s1,   random[1], n / 2);
-                s2 = gen2_1_rotate(s2,   random[2], n / 2);
+                }
+                s1 = gen2_1_rotate(s1, random[1], n / 2);
+                s2 = gen2_1_rotate(s2, random[2], n / 2);
                 stemp = s1 + s2;
-                stemp = gen2_1_rotate(stemp, random[0], n);  
+                stemp = gen2_1_rotate(stemp, random[0], n);
             }
             shuffledData = stemp;
             return;
         }
 
 
-        void gen2_1_shuffle( string s, int pin ) {
+        void gen2_1_shuffle(string s, int pin)
+        {
             gen1_1_shuffle(s, pin); //init string is different, but the algorithm is the same
             return;
         }
@@ -296,7 +309,7 @@ namespace DominoPassword
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            listBox1.SelectedIndex = 0;
         }
 
         int pattern = 1;
@@ -319,7 +332,8 @@ namespace DominoPassword
 
         private void button37_Click(object sender, EventArgs e)
         {
-            try {
+            try
+            {
                 int.Parse(textBox1.Text);
             }
             catch (FormatException)
@@ -332,7 +346,7 @@ namespace DominoPassword
                 MessageBox.Show("The number is too large. Please enter a smaller number.");
                 return;
             }
-            if( listBox1.SelectedIndex == 0 )
+            if (listBox1.SelectedIndex == 0)
             {
                 shuffle(initdata, int.Parse(textBox1.Text));
             }
@@ -347,8 +361,8 @@ namespace DominoPassword
             else if (listBox1.SelectedIndex == 3)
             {
                 gen2_1_shuffle(initdata_2_1, int.Parse(textBox1.Text));
-            }   
-            
+            }
+            toolStripStatusLabel1.Text = "Shuffled string generated, now enter the pattern";
         }
 
 
@@ -356,7 +370,7 @@ namespace DominoPassword
         {
             int i = 1;
             int n = i + 36;
-            while( i < n )
+            while (i < n)
             {
                 Button button = tableLayoutPanel1.Controls["button" + i] as Button;
                 Debug.WriteLine("Button: " + button.Name + " : " + i);
@@ -432,7 +446,7 @@ namespace DominoPassword
             if (shuffledData == "")
                 return;
             string value = ((Button)sender).Name.Substring(6); // Extract the number from the button name
-            int index = (pattern-1)*36 + int.Parse(value)-1; // Convert to zero-based index
+            int index = (pattern - 1) * 36 + int.Parse(value) - 1; // Convert to zero-based index
             if (index >= 0 && index <= 108)
             {
                 textBox2.Text += shuffledData[index];
@@ -448,174 +462,203 @@ namespace DominoPassword
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 1, pattern);
             changeColor(sender);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 2, pattern);
             changeColor(sender);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 3, pattern);
             changeColor(sender);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 4, pattern);
             changeColor(sender);
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 5, pattern);
             changeColor(sender);
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 6, pattern);
             changeColor(sender);
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 7, pattern);
             changeColor(sender);
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 8, pattern);
             changeColor(sender);
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 9, pattern);
             changeColor(sender);
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 10, pattern);
             changeColor(sender);
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 11, pattern);
             changeColor(sender);
         }
 
         private void button12_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 12, pattern);
             changeColor(sender);
         }
 
         private void button13_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 13, pattern);
             changeColor(sender);
         }
 
         private void button14_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 14, pattern);
             changeColor(sender);
         }
 
         private void button15_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 15, pattern);
             changeColor(sender);
         }
 
         private void button16_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 16, pattern);
             changeColor(sender);
         }
 
         private void button17_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 17, pattern);
-            changeColor(sender);    
+            changeColor(sender);
         }
 
         private void button18_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 18, pattern);
             changeColor(sender);
         }
 
         private void button19_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 19, pattern);
             changeColor(sender);
         }
 
         private void button20_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 20, pattern);
             changeColor(sender);
         }
 
         private void button21_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 21, pattern);
             changeColor(sender);
         }
 
         private void button22_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 22, pattern);
             changeColor(sender);
         }
 
         private void button23_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 23, pattern);
             changeColor(sender);
         }
 
         private void button24_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 24, pattern);
             changeColor(sender);
         }
 
         private void button25_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 25, pattern);
             changeColor(sender);
         }
 
         private void button26_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 26, pattern);
             changeColor(sender);
         }
 
         private void button27_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 27, pattern);
             changeColor(sender);
         }
 
         private void button28_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 28, pattern);
             changeColor(sender);
         }
 
         private void button29_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 29, pattern);
             changeColor(sender);
 
@@ -623,42 +666,49 @@ namespace DominoPassword
 
         private void button30_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 30, pattern);
             changeColor(sender);
         }
 
         private void button31_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 31, pattern);
             changeColor(sender);
         }
 
         private void button32_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 32, pattern);
             changeColor(sender);
         }
 
         private void button33_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 33, pattern);
             changeColor(sender);
         }
 
         private void button34_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 34, pattern);
             changeColor(sender);
         }
 
         private void button35_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 35, pattern);
             changeColor(sender);
         }
 
         private void button36_Click(object sender, EventArgs e)
         {
+            if (shuffledData == "") return;
             patternButton_Click(sender, 36, pattern);
             changeColor(sender);
         }
@@ -666,14 +716,42 @@ namespace DominoPassword
         private void button40_Click(object sender, EventArgs e)
         {
             int i = 0;
-            while( i < 128){
+            while (i < 128)
+            {
                 toggleStatus[i] = 0;
                 i++;
             }
             shuffledData = "";
             clearColor();
             textBox1.Text = "";
-            textBox2.Text = ""; 
+            textBox2.Text = "";
+            toolStripStatusLabel1.Text = "Ready";
+        }
+
+        private void textBox1_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                int pin = int.Parse(textBox1.Text);
+                if (pin < 10 || pin > 1000000)
+                {
+                    MessageBox.Show("Please enter a valid number for the pin.");
+                    textBox1.Text = "";
+                    return;
+                }
+            }
+            catch (FormatException fe)
+            {
+                MessageBox.Show("Please enter a valid number for the pin.");
+                textBox1.Text = "";
+                return;
+            }
+            catch (OverflowException oe)
+            {
+                MessageBox.Show("The number is too large. Please enter a smaller number.");
+                textBox1.Text = "";
+                return;
+            }
         }
     }
 }

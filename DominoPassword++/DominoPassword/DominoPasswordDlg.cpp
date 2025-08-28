@@ -99,6 +99,8 @@ BEGIN_MESSAGE_MAP(CDominoPasswordDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_RADIO2, &CDominoPasswordDlg::OnBnClickedRadio2)
 	ON_BN_CLICKED(IDC_RADIO3, &CDominoPasswordDlg::OnBnClickedRadio3)
 	ON_BN_CLICKED(IDC_RADIO4, &CDominoPasswordDlg::OnBnClickedRadio4)
+	ON_WM_SHOWWINDOW()
+	ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
 
@@ -122,7 +124,10 @@ BOOL CDominoPasswordDlg::OnInitDialog()
 	//pattern = 2;
 	//loadButtons(); // Load buttons with the initial pattern
 	//pattern = 1;
-	//loadButtons(); // Load buttons with the initial pattern
+	//resetButtons(); // Load buttons with the initial pattern
+	//OnBnClickedButton4();
+	//OnBnClickedButton3();
+	//firstresetButtons(); // Reset buttons to default state
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -170,10 +175,28 @@ void CDominoPasswordDlg::changeColor(CButton* pButton, COLORREF color)
 		pButton->ModifyStyle(0, BS_OWNERDRAW);
 		CBrush brush(color);
 		CRect rect;
+		CClientDC dc(pButton);
 		pButton->GetClientRect(&rect);
 		rect.DeflateRect(4, 4);
-		CClientDC dc(pButton);
 		dc.FillRect(&rect, &brush);
+	}
+}
+
+
+void CDominoPasswordDlg::firstresetButtons()
+{
+	for (int i = 0; i < 36; i++)
+	{
+		CButton* pButton = (CButton*)GetDlgItem(IDC_BUTTON5 + i);
+		if (pButton)
+		{
+			//pButton->SetWindowText(_T("Button " + std::to_wstring(i + 1).c_str()));
+			changeColor(pButton, colorDefault ); // Reset button color to default
+			//pButton->SetFocus();
+			//pButton->
+			//pButton->SubclassDlgItem(IDC_BUTTON5 + i, this);
+			//pButton->SetBackgroundColor(colorDefault); // Set the background color to default
+		}
 	}
 }
 
@@ -187,7 +210,7 @@ void CDominoPasswordDlg::resetButtons()
 		{
 			//pButton->SetWindowText(_T("Button " + std::to_wstring(i + 1).c_str()));
 			changeColor(pButton, colorDefault); // Reset button color to default
-			
+			//pButton->SetFocus();
 		}
 	}
 	for (int i = 0; i < 108; i++)
@@ -244,6 +267,7 @@ void CDominoPasswordDlg::loadButtons()
 				changeColor(pButton, color); // Set button color to red
 			else
 				changeColor(pButton, colorDefault); // Reset button color to default
+			pButton->SetFocus();
 		}
 	}
 	CStatic* staticPattern = (CStatic*)GetDlgItem(IDC_STATIC_PATTERN);
@@ -253,8 +277,6 @@ void CDominoPasswordDlg::loadButtons()
 		strPattern.Format(_T("Pattern: %d/3"), pattern);
 		staticPattern->SetWindowText(strPattern);
 	}
-	
-
 }
 
 
@@ -525,6 +547,7 @@ void CDominoPasswordDlg::OnBnClickedButton1()
 			return;
 		}
 	}
+	firstresetButtons();
 	if (pButton)
 	{
 		if (versionToUse == 1) {
@@ -1191,3 +1214,14 @@ void CDominoPasswordDlg::OnBnClickedRadio4()
 	}
 }
 
+
+void CDominoPasswordDlg::OnShowWindow(BOOL bShow, UINT nStatus)
+{
+	CDialogEx::OnShowWindow(bShow, nStatus);
+}
+
+void CDominoPasswordDlg::OnSetFocus(CWnd* pOldWnd)
+{
+	CDialogEx::OnSetFocus(pOldWnd);
+	// TODO: Add your message handler code here
+}

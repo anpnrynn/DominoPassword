@@ -42,6 +42,7 @@ public:
 	void changeColor(CButton* pButton, COLORREF color); // Function to change button color
 	void resetData(); // Function to reset data
 	void resetButtons(); // Function to reset button states
+	void firstresetButtons(); // Function to reset button states
 	void loadButtons();
 	void OnBnClickedColorChange(CButton* pButton, int id);
 	void OnBnClickedAddChar(int n);
@@ -101,4 +102,6 @@ public:
 	afx_msg void OnBnClickedRadio2();
 	afx_msg void OnBnClickedRadio3();
 	afx_msg void OnBnClickedRadio4();
+	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
+	afx_msg void OnSetFocus(CWnd* pOldWnd);
 };
